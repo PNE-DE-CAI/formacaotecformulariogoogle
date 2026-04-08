@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Formulários Google | Curso Básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0,1" />
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #0a2f6c 0%, #041a3a 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #212121;
+        }
+        :root {
+            --azul-escuro: #0a2f6c;
+            --azul-claro: #eef3fb;
+            --vermelho: #d32f2f;
+            --branco: #ffffff;
+            --preto: #212121;
+            --cinza-borda: #e0e4e9;
+        }
+        .course-container {
+            max-width: 1500px;
+            margin: 0 auto;
+            background: #0f1a24;
+            border-radius: 48px;
+            padding: 20px;
+            box-shadow: 0 30px 35px rgba(0,0,0,0.5), inset 0 1px 4px rgba(255,255,200,0.1);
+            border: 1px solid var(--vermelho);
+        }
+        .sheets-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #0a2f6ccc;
+            backdrop-filter: blur(4px);
+            padding: 12px 24px;
+            border-radius: 60px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-area img {
+            max-height: 50px;
+            width: auto;
+            background: white;
+            border-radius: 12px;
+            padding: 4px;
+        }
+        .logo-area span {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #ffec9e;
+        }
+        .course-badge {
+            background: var(--vermelho);
+            color: white;
+            padding: 6px 18px;
+            border-radius: 3rem;
+            font-weight: bold;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+        .user-area {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+            background: rgba(255,255,255,0.15);
+            padding: 6px 16px;
+            border-radius: 40px;
+        }
+        .user-area input, .user-area select {
+            padding: 6px 12px;
+            border-radius: 30px;
+            border: none;
+            font-size: 0.8rem;
+            background: white;
+            font-family: 'Inter', sans-serif;
+        }
+        .save-user-btn, .reset-btn {
+            background: linear-gradient(135deg, #0a2f6c, #052050);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 5px 14px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: 0.1s linear;
+            font-weight: 600;
+        }
+        .save-user-btn:hover, .reset-btn:hover {
+            background: var(--vermelho);
+            transform: translateY(-2px);
+        }
+        .progress-indicator {
+            background: #1a2a3a;
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #ffec9e;
+        }
+        .main-dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        /* Área de simulação do formulário (substitui a planilha) */
+        .simulator-area {
+            flex: 1.2;
+            min-width: 480px;
+            background: var(--branco);
+            border-radius: 32px;
+            padding: 20px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            border: 1px solid var(--cinza-borda);
+        }
+        .simulator-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 2px solid #e0e4e9;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .simulator-header i {
+            font-size: 28px;
+            color: var(--azul-escuro);
+        }
+        .form-preview {
+            background: #f8f9fa;
+            border-radius: 24px;
+            padding: 20px;
+            border: 1px solid #e9ecef;
+        }
+        .form-question {
+            background: white;
+            border-radius: 16px;
+            padding: 16px;
+            margin-bottom: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .question-title {
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--azul-escuro);
+        }
+        .mock-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 8px 0;
+            font-size: 0.9rem;
+        }
+        .type-badge {
+            background: #e8f0fe;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+        .tip-box {
+            background: #fff8e7;
+            border-left: 4px solid var(--vermelho);
+            padding: 12px;
+            border-radius: 16px;
+            margin-top: 20px;
+            font-size: 0.85rem;
+        }
+        .course-panel {
+            flex: 1;
+            min-width: 400px;
+            background: #fefefe;
+            border-radius: 32px;
+            padding: 20px;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+        .module-card {
+            background: white;
+            border-radius: 24px;
+            border: 1px solid var(--cinza-borda);
+            margin-bottom: 24px;
+            transition: 0.2s;
+        }
+        .module-header {
+            background: #fafbfc;
+            padding: 14px 20px;
+            border-bottom: 1px solid #eceff3;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-radius: 24px 24px 0 0;
+        }
+        .module-status { margin-left: auto; font-size: 22px; }
+        .module-body { padding: 20px; }
+        .lesson-text { font-size: 0.9rem; line-height: 1.45; margin-bottom: 16px; color: #1e2a3a; }
+        .question-box { background: #f8fafc; padding: 14px; border-radius: 20px; border-left: 5px solid var(--vermelho); margin-top: 12px; }
+        .options { display: flex; flex-direction: column; gap: 10px; margin: 12px 0; }
+        .option {
+            display: flex; align-items: center; gap: 12px; background: white; padding: 8px 16px;
+            border-radius: 60px; border: 1px solid #e2e8f0; cursor: pointer; transition: 0.1s;
+        }
+        .option.selected { border-color: var(--azul-escuro); background: #e8f0fe; }
+        .btn-check {
+            background: linear-gradient(135deg, #0a2f6c, #052050);
+            color: white;
+            border: none;
+            padding: 8px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 8px;
+        }
+        .btn-check:disabled { background: #bdc1c6; cursor: not-allowed; }
+        .feedback { font-size: 0.75rem; margin-top: 8px; font-weight: 500; }
+        .locked-message { background: #f1f3f4; padding: 10px; border-radius: 18px; text-align: center; font-size: 0.8rem; }
+        .certificate-area {
+            margin-top: 20px;
+            background: #f0f7ff;
+            border-radius: 28px;
+            padding: 20px;
+            text-align: center;
+        }
+        .btn-cert {
+            background: #0f9d58;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 60px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding: 1rem;
+            color: #b4c8e0;
+            font-size: 0.8rem;
+            border-top: 1px solid #2c4c6e;
+        }
+        @media (max-width: 1000px) {
+            .main-dashboard { flex-direction: column; }
+            .simulator-area, .course-panel { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+<div class="course-container">
+    <div class="sheets-header">
+        <div class="logo-area">
+            <img src="https://i.ibb.co/0p01LzxB/logo3de.jpg" alt="Logo SEDUC">
+            <span>TECNOLOGIA 2026 - URE CAIEIRAS</span>
+        </div>
+        <div class="course-badge">📋 Formulários Google · Coleta de Dados</div>
+        <div class="user-area">
+            <input type="text" id="studentName" placeholder="Seu nome completo" value="">
+            <input type="text" id="studentCPF" placeholder="CPF (opcional)" value="">
+            <select id="schoolSelect">
+                <option value="">Selecione sua escola</option>
+            </select>
+            <button id="saveUserBtn" class="save-user-btn">Salvar</button>
+        </div>
+        <div class="progress-indicator" id="globalProgress">0/6 módulos</div>
+        <button id="resetAllBtn" class="reset-btn">↺ Reiniciar Curso</button>
+    </div>
+
+    <div class="main-dashboard">
+        <!-- Simulação de formulário Google (substitui a planilha) -->
+        <div class="simulator-area">
+            <div class="simulator-header">
+                <i class="fas fa-edit"></i>
+                <span style="font-weight: 700; font-size: 1.2rem;">Simulador de Formulário</span>
+                <span style="margin-left: auto; font-size: 0.7rem; background:#e8f0fe; padding:4px 12px; border-radius:20px;">Preview interativo</span>
+            </div>
+            <div class="form-preview" id="formPreview">
+                <!-- Conteúdo dinâmico via JS (exemplo de pergunta) -->
+            </div>
+            <div class="tip-box">
+                <i class="fas fa-lightbulb" style="color: var(--vermelho);"></i> <strong>Dica do PDF:</strong> Use perguntas fechadas (lista suspensa, múltipla escolha, caixa de seleção, escala, grade) para facilitar gráficos e filtros na planilha.
+            </div>
+        </div>
+
+        <!-- Painel de módulos (6 módulos sobre Google Forms) -->
+        <div class="course-panel" id="modulesContainer"></div>
+    </div>
+    <footer>
+        ✅ Formação de Tecnologia · Unidade Regional de Ensino Caieiras<br>
+        Curso de Formulários Google - 6 módulos simples · Aprenda a criar, aplicar e analisar dados com Google Forms e Sheets.
+    </footer>
+</div>
+
+<script>
+    // ---------- 1. LISTA DE 67 ESCOLAS (exatamente as do código referência) ----------
+    const escolasLista = [
+        "E.E. ADAIL JARBAS DUCLOS", "E.E. AFONSO MORENO", "E.E. ALADINO POLON", "E.E. ALBERTO GRAF – CAPITÃO",
+        "E.E. ALBINO FIORE", "E.E. ALFRIED THEODOR WEISZFLOG", "E.E. ANA MARIA GARRIDO ORLANDIN – PROF.ª",
+        "E.E. APARECIDO ROBERTO TONELLOTTI – PROF.", "E.E. ARMANDO SESTINI", "E.E. ARTHUR WEINGRILL",
+        "E.E. AZEVEDO SOARES", "E.E. BAIRRO DO ITAIM", "E.E. BAIRRO JUNDIAIZINHO", "E.E. BELÉM DA SERRA",
+        "E.E. BENEDITO APARECIDO TAVARES – PROF.", "E.E. BENEDITO FAGUNDES MARQUES",
+        "E.E. BUENO DE AZEVEDO FILHO – PROF.", "E.E. CARLOS AUGUSTO DE PÁDUA FLEURY – PROF.",
+        "E.E. CELESTINA VALENTE LENGENFELDER – PROF.ª", "E.E. CHÁCARA CAMPONESA/ Jd Vassouras",
+        "E.E. DOMINGOS CAMBIAGHI – PROF.", "E.E. ÉLCIO JOSÉ PEREIRA COTRIM – PROF.",
+        "E.E. ELVIRA PARADA MANGA – PROF.ª", "E.E. FRANCISCO GONÇALVES VIEIRA – PROFº",
+        "E.E. HERMELINA DE ALBUQUERQUE PASSARELLA – PROF.ª", "E.E. IRACI SARTORI VIEIRA DA SILVA – PROF.ª",
+        "E.E. ISAÍAS LUIZ MATIAZZO", "E.E. ISAURA DE MIRANDA BOTTO – PROFª", "E.E. ISAURA VALENTINI HANSER – PROFª",
+        "E.E. IVONE DOS ANJOS DA SILVA CAMPOS – PROF.ª", "E.E. JARDIM ALEGRIA II", "E.E. JARDIM DAS ROSAS",
+        "E.E. JARDIM SÃO FRANCISCO", "E.E. JARDIM SILVIA II", "E.E. JOAQUIM MARQUES DA SILVA SOBRINHO – TTE.",
+        "E.E. JOCIMARA VIEIRA DA SILVA – PROF.ª", "E.E. JOSÉ CARLOS DA SILVA JUNIOR",
+        "E.E. JOSÉ DE BARROS MARTINS – EDITOR", "E.E. JOSÉ PARADA – PROF.", "E.E. JOSÉ ROBERTO MELCHIOR – DR.",
+        "E.E. KÁTIA MARIA TARIFA LEME TONELLI – PROF.ª", "E.E. LENITA CORRÊA CAMARGO – PROF.ª",
+        "E.E. LUIZ ALEXANDRE DOS SANTOS – VEREADOR", "E.E. LYDIA SCALET WALKER – PROF.ª",
+        "E.E. MARIA ZEZA GOMES DE OLIVEIRA", "E.E. MARIO TOLEDO DE MORAES – DR.", "E.E. NAIR HANNICKEL ROMARO",
+        "E.E. NELSON MANZANARES – DR.", "E.E. NIDE ZAIM CARDOSO – PROF.ª", "E.E. ODARICO OLIVEIRA NASCIMENTO – PROF.",
+        "E.E. OTTO WEISZFLOG", "E.E. OZILDE ALBUQUERQUE PASSARELLA – DR.", "E.E. PARQUE CENTO E VINTE II",
+        "E.E. PAULO DUARTE", "E.E. PEDRO GALRÃO DO NASCIMENTO", "E.E. PEDRO LELIS DE SOUZA – PREFEITO",
+        "E.E. PEDRO PAULO AGUIAR", "E.E. PIETRO PETRI", "E.E. RITUCO MITANI – PROF.ª",
+        "E.E. ROGÉRIO LEVORIN – PROF.", "E.E. SUZANA DIAS", "E.E. ULYSSES SANCHES RAMIRES – PROF.",
+        "E.E. VINCENZO LOBASSI", "E.E. WALTER RIBAS DE ANDRADE – PROF.", "E.E. WALTHER WEISZFLOG",
+        "E.E. ZILTON BICUDO – PROF.", "E.E. OLINDO DÁRTORA – DR."
+    ];
+    const schoolSelect = document.getElementById('schoolSelect');
+    escolasLista.forEach(escola => {
+        const opt = document.createElement('option');
+        opt.value = escola;
+        opt.textContent = escola;
+        schoolSelect.appendChild(opt);
+    });
+
+    // ---------- 2. SIMULAÇÃO DE FORMULÁRIO (atualiza conforme módulo atual) ----------
+    function updateFormPreview(moduleIndex = 0) {
+        const previewDiv = document.getElementById('formPreview');
+        if (!previewDiv) return;
+        // Exemplos alinhados aos conceitos de cada módulo
+        const examples = [
+            { title: "Pergunta de múltipla escolha", type: "Múltipla escolha", options: ["Matemática", "Português", "Ciências"], desc: "Qual componente você mais gosta?" },
+            { title: "Caixa de seleção", type: "Caixa de seleção (várias opções)", options: ["Gamificação", "Projetos", "Avaliação diagnóstica"], desc: "Quais estratégias você utiliza?" },
+            { title: "Lista suspensa", type: "Lista suspensa", options: ["Excelente", "Bom", "Regular", "Precisa melhorar"], desc: "Avalie sua experiência com formulários:" },
+            { title: "Escala linear", type: "Escala (1 a 5)", options: ["1 - Discordo totalmente", "2", "3", "4", "5 - Concordo totalmente"], desc: "O uso de formulários facilita a coleta de dados?" },
+            { title: "Grade de múltipla escolha", type: "Grade", options: ["Ótimo", "Bom", "Ruim"], desc: "Avalie os seguintes aspectos (linhas vs colunas)" },
+            { title: "Formulario para teste", type: "Como podemos gerar um teste ", options: [], desc: "No formulario na opçao questionario voce configurar as respostas corretas." }
+        ];
+        const ex = examples[Math.min(moduleIndex, examples.length-1)];
+        let html = `<div class="form-question">
+            <div class="type-badge">${ex.type}</div>
+            <div class="question-title">${ex.desc}</div>`;
+        if (ex.type === "Múltipla escolha") {
+            html += `<div class="mock-option"><i class="far fa-circle"></i> ${ex.options[0]}</div>
+                     <div class="mock-option"><i class="far fa-circle"></i> ${ex.options[1]}</div>
+                     <div class="mock-option"><i class="far fa-circle"></i> ${ex.options[2]}</div>`;
+        } else if (ex.type === "Caixa de seleção (várias opções)") {
+            html += `<div class="mock-option"><i class="far fa-square"></i> ${ex.options[0]}</div>
+                     <div class="mock-option"><i class="far fa-square"></i> ${ex.options[1]}</div>
+                     <div class="mock-option"><i class="far fa-square"></i> ${ex.options[2]}</div>`;
+        } else if (ex.type === "Lista suspensa") {
+            html += `<select style="width:100%; padding:8px; border-radius:12px; border:1px solid #ccc;"><option>${ex.options[0]}</option><option>${ex.options[1]}</option><option>${ex.options[2]}</option><option>${ex.options[3]}</option></select>`;
+        } else if (ex.type === "Escala (1 a 5)") {
+            html += `<div style="display:flex; gap:8px; flex-wrap:wrap;">${ex.options.map(o => `<span style="background:#eef; padding:6px 12px; border-radius:30px;">${o}</span>`).join('')}</div>`;
+        } else if (ex.type === "Grade") {
+            html += `<table style="width:100%; font-size:0.8rem;"><tr><th></th><th>Ótimo</th><th>Bom</th><th>Ruim</th></tr>
+                      <tr><td>Organização</td><td><input type="radio"></td><td><input type="radio"></td><td><input type="radio"></td></tr>
+                      <tr><td>Clareza</td><td><input type="radio"></td><td><input type="radio"></td><td><input type="radio"></td></tr></table>`;
+        } else {
+            html += `<textarea rows="2" style="width:100%; border-radius:12px; padding:8px;" placeholder="Digite sua resposta..."></textarea>
+                     <div style="font-size:0.7rem; margin-top:8px; color:#666;">🔍 O professor pode indicar as respostas corretas no questionario de maneira automatica.</div>`;
+        }
+        html += `</div>`;
+        previewDiv.innerHTML = html;
+    }
+
+    // ---------- 3. MÓDULOS (6 módulos sobre Google Forms, baseados no PDF) ----------
+    const modulesData = [
+        { id:0, title:"📋 1. Google Forms + Planilhas", lesson:"Formulários Google se integram automaticamente ao Google Sheets, criando uma planilha com as respostas. Ideal para coleta organizada e automática de dados com perguntas fechadas.",
+          question:"Qual ferramenta do Google permite criar formulários que alimentam diretamente uma planilha?", options:["Google Forms","Google Docs","Google Slides","Google Keep"], correct:"Google Forms", hint:"Google Forms envia respostas para uma planilha." },
+        { id:1, title:"📝 2. Planejamento do Formulário", lesson:"Antes de criar, responda: Qual meu objetivo? Quem irá responder? Como quero os dados na planilha? Quais informações obrigatórias? O que farei com os resultados?",
+          question:"Qual destas perguntas NÃO é essencial no planejamento de um formulário?", options:["Qual meu objetivo?","Qual a cor do formulário?","Quem irá responder?","O que farei com os resultados?"], correct:"Qual a cor do formulário?", hint:"A cor não interfere na coleta de dados; o foco é objetivo, público e uso dos dados." },
+        { id:2, title:"✅ 3. Tipos de Perguntas Fechadas", lesson:"Múltipla escolha, caixa de seleção (várias opções), lista suspensa. Esses tipos facilitam a criação de gráficos e filtros na planilha.",
+          question:"Qual tipo de pergunta permite que o usuário selecione VÁRIAS opções ao mesmo tempo?", options:["Múltipla escolha","Caixa de seleção","Lista suspensa","Escala linear"], correct:"Caixa de seleção", hint:"Caixa de seleção (checkbox) permite múltiplas respostas." },
+        { id:3, title:"📊 4. Escala, Classificação e Grade", lesson:"Perguntas de escala (ex: 1 a 5), classificação (ordenar itens) e grade (matricial) são ideais para pesquisas de opinião e avaliações detalhadas.",
+          question:"Qual tipo de pergunta é mais adequado para medir o grau de concordância (ex: concordo totalmente a discordo totalmente)?", options:["Escala linear","Caixa de seleção","Lista suspensa","Parágrafo"], correct:"Escala linear", hint:"Escala linear (tipo Likert) mede intensidade de opinião." },
+        { id:4, title:"🤖 5. Formulario para teste", lesson:"No formulario é possivel gerar um questionario que se auto-corrigi.",
+          question:"Na opção questionario ?", options:["Posso configurar as respostas corretas","Apenas executar o formulario","Ignorar os resultados","Deixar a IA decidir tudo para gerar formularios"], correct:"Posso configurar as respostas corretas", hint:"Nas configuraçoes voce vai achar a opção de questionario." },
+        { id:5, title:"📈 6. Transformação em Dados e Gráficos", lesson:"Perguntas fechadas geram dados estruturados na planilha, permitindo gráficos, filtros e dashboards. Use para diagnóstico e tomada de decisão.",
+          question:"Que recurso do Google planilhas ajuda a visualizar rapidamente as respostas de um formulário?", options:["Inserir gráfico a partir da tabela","Função SE","Formatação condicional","Congelar painéis"], correct:"Inserir gráfico a partir da tabela", hint:"Com os dados na planilha, você pode criar gráficos para análise visual." }
+    ];
+
+    // Estados
+    let completed = new Array(6).fill(false);
+    let selectedAnswers = new Array(6).fill(null);
+    let feedbacks = new Array(6).fill("");
+    let userName = "", userCPF = "", userSchool = "";
+
+    function loadUserData() {
+        const savedName = localStorage.getItem("forms_user_name");
+        const savedCPF = localStorage.getItem("forms_user_cpf");
+        const savedSchool = localStorage.getItem("forms_user_school");
+        if(savedName) { document.getElementById('studentName').value = savedName; userName = savedName; }
+        if(savedCPF) { document.getElementById('studentCPF').value = savedCPF; userCPF = savedCPF; }
+        if(savedSchool) { document.getElementById('schoolSelect').value = savedSchool; userSchool = savedSchool; }
+    }
+    function saveUserData() {
+        userName = document.getElementById('studentName').value.trim();
+        userCPF = document.getElementById('studentCPF').value.trim();
+        userSchool = document.getElementById('schoolSelect').value;
+        if(userName) localStorage.setItem("forms_user_name", userName);
+        if(userCPF) localStorage.setItem("forms_user_cpf", userCPF);
+        if(userSchool) localStorage.setItem("forms_user_school", userSchool);
+        alert("Dados salvos! Serão usados no certificado.");
+        renderModules();
+    }
+    document.getElementById('saveUserBtn').addEventListener('click', saveUserData);
+
+    function loadProgress() {
+        const saved = localStorage.getItem("forms_course_progress_v2");
+        if(saved) {
+            try {
+                const arr = JSON.parse(saved);
+                if(Array.isArray(arr) && arr.length===6) completed = arr;
+            } catch(e) {}
+        }
+    }
+    function saveProgress() { localStorage.setItem("forms_course_progress_v2", JSON.stringify(completed)); }
+
+    function isModuleAccessible(idx) {
+        if(idx===0) return true;
+        return completed[idx-1] === true;
+    }
+
+    function updateGlobalProgress() {
+        const done = completed.filter(v=>v===true).length;
+        document.getElementById('globalProgress').innerHTML = `${done}/6 módulos`;
+        if(done === 6) showCertificateButton();
+        else hideCertificateButton();
+        // Atualiza a simulação do formulário baseado no primeiro módulo não concluído
+        let currentModule = completed.findIndex(c=>!c);
+        if(currentModule === -1) currentModule = 5;
+        updateFormPreview(currentModule);
+    }
+    function showCertificateButton() {
+        let certDiv = document.getElementById('dynamicCertBtn');
+        if(!certDiv) {
+            const panel = document.getElementById('modulesContainer');
+            const div = document.createElement('div');
+            div.id = 'dynamicCertBtn';
+            div.className = 'certificate-area';
+            div.innerHTML = `<button id="generateCertBtn" class="btn-cert">🎓 Gerar Certificado de Conclusão 🎓</button>`;
+            panel.appendChild(div);
+            document.getElementById('generateCertBtn')?.addEventListener('click', emitirCertificado);
+        }
+    }
+    function hideCertificateButton() {
+        const btnDiv = document.getElementById('dynamicCertBtn');
+        if(btnDiv) btnDiv.remove();
+    }
+
+    function emitirCertificado() {
+        if(completed.every(v=>v===false)) { alert("Complete todos os 6 módulos primeiro!"); return; }
+        if(!userName || !userSchool) { alert("Por favor, salve seu nome e escola no cabeçalho antes de gerar o certificado."); return; }
+        const cpfDisplay = userCPF ? `<div class="cpf" style="font-size: 16px; background: #f1f3f4; padding: 6px 16px; border-radius: 30px; display: inline-block; margin: 5px 0; font-family: monospace;">CPF: ${userCPF}</div>` : '';
+        const certWindow = window.open("", "_blank");
+        certWindow.document.write(`
+            <html><head><title>Certificado Formulários Google - Curso Básico</title>
+            <style>
+                * { margin:0; padding:0; box-sizing:border-box; }
+                body { font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(145deg, #0a2f6c 0%, #041a3a 100%); padding:20px; }
+                .cert-box { max-width: 850px; width:100%; background: white; border-radius: 40px; padding: 48px; text-align: center; border: 12px solid #d32f2f; box-shadow: 0 25px 40px rgba(0,0,0,0.3); position: relative; }
+                .logo-area { display: flex; justify-content: center; gap: 20px; align-items: center; margin-bottom: 20px; }
+                .logo-area img { max-height: 60px; background: white; border-radius: 16px; padding: 5px; }
+                .logo-text { font-size: 28px; font-weight: 700; color: #0a2f6c; }
+                h1 { color: #202124; margin: 20px 0 10px; font-size: 28px; }
+                .nome { font-size: 32px; font-weight: bold; border-bottom: 3px solid #d32f2f; display: inline-block; margin: 20px 0; padding: 0 20px; color: #0a2f6c; }
+                .escola { font-size: 18px; margin: 15px 0; background: #f1f3f4; padding: 8px 20px; border-radius: 40px; display: inline-block; }
+                .descricao { font-size: 15px; margin: 20px 0; line-height: 1.5; color: #3c4043; max-width: 600px; margin-left: auto; margin-right: auto; }
+                .footer-cert { margin-top: 35px; font-size: 12px; color: #5f6368; border-top: 1px solid #ddd; padding-top: 20px; display: flex; justify-content: space-between; }
+                .date { font-weight: 500; }
+                .assinatura { font-style: italic; }
+            </style>
+            </head><body>
+            <div class="cert-box">
+                <div class="logo-area">
+                    <img src="https://i.ibb.co/0p01LzxB/logo3de.jpg" alt="Logo SEDUC">
+                    <div class="logo-text">Formulários Google</div>
+                </div>
+                <h1>CERTIFICADO DE FORMAÇÃO BÁSICA</h1>
+                <p style="font-size:18px;">Certificamos que</p>
+                <div class="nome">${userName}</div>
+                ${cpfDisplay}
+                <div class="escola">${userSchool}</div>
+                <div class="descricao">
+                    Concluiu com êxito o curso <strong>"Formulários Google - Coleta e Análise de Dados Simples"</strong> com carga horária de 6 módulos,<br>
+                    abrangendo planejamento, tipos de perguntas (múltipla escolha, caixa de seleção, lista suspensa, escala, grade),<br>
+                    integração com Google Sheets, análise qualitativa com IA e interpretação pedagógica dos resultados.<br>
+                    <strong>Unidade Regional de Ensino Caieiras - Tecnologia 2026</strong>
+                </div>
+                <div class="footer-cert">
+                    <span>Emitido em: ${new Date().toLocaleDateString('pt-BR')}</span>
+                    <span class="assinatura">Formação Continuada URE-CAIEIRAS</span>
+                </div>
+            </div>
+            </body></html>
+        `);
+        certWindow.document.close();
+        certWindow.print();
+    }
+
+    function renderModules() {
+        const container = document.getElementById('modulesContainer');
+        if(!container) return;
+        container.innerHTML = "";
+        modulesData.forEach((mod, idx) => {
+            const accessible = isModuleAccessible(idx);
+            const alreadyDone = completed[idx];
+            const card = document.createElement('div');
+            card.className = 'module-card';
+            card.style.opacity = (accessible || alreadyDone) ? "1" : "0.7";
+            const header = document.createElement('div');
+            header.className = 'module-header';
+            header.innerHTML = `<span>${mod.title}</span><div class="module-status">${alreadyDone ? '✅' : (accessible ? '🔓' : '🔒')}</div>`;
+            const body = document.createElement('div');
+            body.className = 'module-body';
+            body.innerHTML = `<div class="lesson-text">${mod.lesson}</div>`;
+            const qBox = document.createElement('div');
+            qBox.className = 'question-box';
+            qBox.innerHTML = `<strong>❓ ${mod.question}</strong>`;
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+            mod.options.forEach(opt => {
+                const optEl = document.createElement('div');
+                optEl.className = `option ${selectedAnswers[idx] === opt ? 'selected' : ''}`;
+                optEl.innerHTML = `<span style="flex:1">${opt}</span>`;
+                optEl.addEventListener('click', () => {
+                    if(alreadyDone || !accessible) { if(!accessible && !alreadyDone) alert("Complete o módulo anterior primeiro!"); return; }
+                    selectedAnswers[idx] = opt;
+                    renderModules();
+                });
+                optionsDiv.appendChild(optEl);
+            });
+            const btn = document.createElement('button');
+            btn.textContent = "Verificar e Avançar";
+            btn.className = "btn-check";
+            if(alreadyDone) { btn.disabled=true; btn.textContent="✓ Concluído"; }
+            else if(!accessible && !alreadyDone) { btn.disabled=true; btn.textContent="🔒 Trancado"; }
+            const feedbackSpan = document.createElement('div');
+            feedbackSpan.className = 'feedback';
+            if(feedbacks[idx]) feedbackSpan.innerHTML = feedbacks[idx];
+            btn.onclick = () => {
+                if(alreadyDone) return;
+                if(!accessible) { feedbacks[idx] = "🔐 Finalize o módulo anterior."; renderModules(); return; }
+                const selected = selectedAnswers[idx];
+                if(!selected) { feedbacks[idx] = "⚠️ Selecione uma opção."; renderModules(); return; }
+                if(selected === mod.correct) {
+                    if(!completed[idx]) {
+                        completed[idx]=true;
+                        saveProgress();
+                        feedbacks[idx] = "✅ Correto! Módulo concluído. Próximo desbloqueado!";
+                        renderModules();
+                        updateGlobalProgress();
+                    } else { feedbacks[idx]="✅ Já concluído."; renderModules(); }
+                } else {
+                    feedbacks[idx] = `❌ Incorreto. Dica: ${mod.hint}`;
+                    renderModules();
+                }
+            };
+            qBox.appendChild(optionsDiv);
+            qBox.appendChild(btn);
+            qBox.appendChild(feedbackSpan);
+            body.appendChild(qBox);
+            if(!accessible && !alreadyDone && idx>0) {
+                const lockMsg = document.createElement('div');
+                lockMsg.className = 'locked-message';
+                lockMsg.innerText = "🔒 Complete o módulo anterior para liberar.";
+                body.appendChild(lockMsg);
+            }
+            card.appendChild(header);
+            card.appendChild(body);
+            container.appendChild(card);
+        });
+        updateGlobalProgress();
+    }
+
+    function resetEverything() {
+        completed.fill(false);
+        selectedAnswers.fill(null);
+        feedbacks.fill("");
+        saveProgress();
+        renderModules();
+        hideCertificateButton();
+        updateFormPreview(0);
+        alert("Progresso reiniciado. Todos os módulos foram bloqueados novamente.");
+    }
+
+    document.getElementById('resetAllBtn').addEventListener('click', resetEverything);
+    loadUserData();
+    loadProgress();
+    renderModules();
+    updateFormPreview(0);
+    updateGlobalProgress();
+</script>
+</body>
+</html>
